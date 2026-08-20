@@ -1,306 +1,1142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mafiya vlogger</title>
-    <!-- Lucide Icons and Google Fonts Insertion for Premium Interface look -->
-    <script src="https://jsdelivr.net"></script>
-    <link href="https://googleapis.com" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-dark: #07080d;
-            --card-bg: rgba(18, 20, 32, 0.7);
-            --accent-neon: #00ffcc;
-            --accent-glow: rgba(0, 255, 204, 0.3);
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --border-glow: rgba(255, 255, 255, 0.08);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#00ffd0">
+<title>Mafiya Premium Super App</title>
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-        }
-        
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% -20%, #132337 0%, transparent 50%);
-            min-height: 100vh;
-        }
+<style>
+:root{
+  --bg:#06080d;
+  --card:#101622;
+  --card2:#151d2b;
+  --text:#fff;
+  --muted:#94a3b8;
+  --accent:#00ffd0;
+  --danger:#ff3d71;
+  --border:rgba(255,255,255,.09);
+}
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-neon); }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-        /* Premium Glassmorphic Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 5%;
-            background: rgba(7, 8, 13, 0.75);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-glow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo { 
-            font-size: 22px; 
-            font-weight: 800; 
-            color: var(--text-main); 
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .logo span {
-            color: var(--accent-neon);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-        
-        .insta-btn {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white; 
-            padding: 10px 20px; 
-            border-radius: 30px; 
-            text-decoration: none;
-            font-weight: 700; 
-            font-size: 13px; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.2);
-        }
-        
-        .insta-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.4); 
-            letter-spacing: 0.5px;
-        }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,#123c43,transparent 42%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-        /* Dynamic Navigation Tabs */
-        .nav-tabs {
-            display: flex; 
-            justify-content: center; 
-            gap: 12px; 
-            margin: 30px 0; 
-            padding: 0 20px; 
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        
-        .nav-tabs::-webkit-scrollbar { display: none; }
-        
-        .tab-btn {
-            background: var(--card-bg); 
-            border: 1px solid var(--border-glow); 
-            color: var(--text-muted);
-            padding: 14px 26px; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            font-size: 14px;
-            transition: all 0.3s ease; 
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--accent-neon); 
-            color: #050508; 
-            border-color: var(--accent-neon); 
-            box-shadow: 0 0 20px var(--accent-glow);
-            font-weight: 700;
-        }
+button,input,textarea,select{
+  font:inherit;
+}
 
-        /* App Main Content Container */
-        .content-section { 
-            display: none; 
-            padding: 0 5% 60px 5%; 
-            animation: fadeIn 0.4s ease-in-out forwards;
-        }
-        
-        .content-section.active { display: block; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+button{
+  cursor:pointer;
+}
 
-        /* Universal Box Design Layout */
-        .panel-box {
-            background: var(--card-bg); 
-            border: 1px solid var(--border-glow); 
-            padding: 40px 30px;
-            border-radius: 24px; 
-            text-align: center; 
-            max-width: 750px; 
-            margin: 20px auto; 
-            backdrop-filter: blur(12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  height:68px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 18px;
+  background:rgba(6,8,13,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
 
-        .section-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
-        .section-desc { color: var(--text-muted); font-size: 15px; margin-bottom: 30px; }
+.logo{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:1px;
+}
 
-        /* Universal Premium Form Elements */
-        .input-group {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto 20px auto;
-        }
+.logo span{
+  color:var(--accent);
+  text-shadow:0 0 15px var(--accent);
+}
 
-        .app-input {
-            width: 100%; 
-            padding: 16px 24px; 
-            background: rgba(0, 0, 0, 0.4); 
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 14px; 
-            color: white; 
-            font-size: 15px; 
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        
-        .app-input:focus { 
-            border-color: var(--accent-neon); 
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.15);
-            background: rgba(0,0,0,0.6);
-        }
-        
-        .action-btn {
-            background: var(--accent-neon); 
-            color: #050508; 
-            padding: 16px 36px; 
-            border: none;
-            border-radius: 14px; 
-            font-weight: 700; 
-            cursor: pointer; 
-            font-size: 15px; 
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-        
-        .action-btn:hover { 
-            box-shadow: 0 6px 25px rgba(0, 255, 204, 0.5);
-            transform: translateY(-1px);
-        }
+.header-actions{
+  display:flex;
+  gap:8px;
+}
 
-        /* 1. Video Downloader Visual Styling */
-        #dl-result { margin-top: 25px; transition: all 0.3s ease; }
-        .success-dl-btn {
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #10b981;
-            color: white;
-            padding: 16px 32px;
-            border-radius: 14px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            transition: 0.3s;
-        }
-        .success-dl-btn:hover {
-            background: #059669;
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
-        }
+.icon-btn{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:#fff;
+}
 
-        /* 2. Premium Games UI Hub Grid */
-        .games-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-            gap: 20px; 
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        .game-card {
-            background: var(--card-bg); 
-            border: 1px solid var(--border-glow); 
-            border-radius: 20px;
-            padding: 25px 20px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-        }
-        
-        .game-card:hover { 
-            transform: translateY(-6px); 
-            border-color: var(--accent-neon); 
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 15px rgba(0, 255, 204, 0.1); 
-        }
-        
-        .game-icon { 
-            font-size: 42px; 
-            margin-bottom: 15px; 
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        
-        .game-card:hover .game-icon { transform: scale(1.15); }
-        .game-card h3 { font-size: 16px; font-weight: 700; color: #f8fafc; }
-        
-        /* 3. Integrated Online Engine Browser Layout */
-        .browser-container { 
-            background: #0f111a; 
-            border-radius: 20px; 
-            border: 1px solid var(--border-glow); 
-            overflow: hidden; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        .browser-bar { 
-            background: #161925; 
-            padding: 12px 20px; 
-            display: flex; 
-            gap: 12px; 
-            align-items: center; 
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .browser-bar .action-btn { padding: 10px 18px; font-size: 13px; border-radius: 8px; }
-        
-        .incognito-mode { 
-            border: 1px solid #ff0055 !important; 
-            box-shadow: 0 0 25px rgba(255, 0, 85, 0.15) !important;
-        }
-        .incognito-mode .browser-bar { background: #0b0c10; }
-        
-        .logo-incog { 
-            color: #ff0055; 
-            font-size: 12px; 
-            font-weight: 800; 
-            letter-spacing: 1px;
-            text-shadow: 0 0 8px rgba(255,0,85,0.4);
-        }
-        
-        .browser-frame { width: 100%; height: 68vh; border: none; background: white; }
+.icon-btn:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
 
-        /* 4. Chatbot Advanced Conversation Dock */
-        .chat-container { 
-            max-width: 700px; 
-            margin: 0 auto; 
+.nav{
+  position:sticky;
+  top:68px;
+  z-index:900;
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  padding:14px;
+  scrollbar-width:none;
+  background:rgba(6,8,13,.78);
+  backdrop-filter:blur(14px);
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.nav button{
+  white-space:nowrap;
+  padding:11px 16px;
+  border-radius:25px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--muted);
+  transition:.2s;
+}
+
+.nav button.active,
+.nav button:hover{
+  background:var(--accent);
+  color:#00100d;
+  border-color:var(--accent);
+}
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+  animation:fade .25s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
+.hero{
+  text-align:center;
+  padding:35px 10px;
+}
+
+.hero h1{
+  font-size:clamp(30px,7vw,58px);
+  margin-bottom:12px;
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero p{
+  max-width:700px;
+  margin:auto;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.card{
+  background:rgba(16,22,34,.8);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 18px 45px rgba(0,0,0,.25);
+  backdrop-filter:blur(14px);
+}
+
+.title{
+  font-size:23px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.desc{
+  color:var(--muted);
+  line-height:1.5;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+
+.feature{
+  padding:22px;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:18px;
+  text-align:center;
+  transition:.25s;
+}
+
+.feature:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent);
+  box-shadow:0 0 20px rgba(0,255,208,.08);
+}
+
+.emoji{
+  font-size:40px;
+  margin-bottom:12px;
+}
+
+.feature h3{
+  margin-bottom:7px;
+}
+
+.feature p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.input{
+  width:100%;
+  padding:15px;
+  border-radius:13px;
+  border:1px solid var(--border);
+  background:#080b12;
+  color:white;
+  outline:none;
+  margin-bottom:10px;
+}
+
+.input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 15px rgba(0,255,208,.12);
+}
+
+textarea{
+  resize:vertical;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.row .input{
+  flex:1;
+  min-width:180px;
+}
+
+.btn{
+  border:0;
+  padding:13px 18px;
+  border-radius:12px;
+  background:var(--accent);
+  color:#00100d;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.btn.secondary{
+  background:#202a3a;
+  color:white;
+}
+
+.btn.danger{
+  background:var(--danger);
+  color:white;
+}
+
+.btn:hover{
+  filter:brightness(1.08);
+  transform:translateY(-1px);
+}
+
+.status{
+  margin-top:14px;
+  padding:13px;
+  background:#080b12;
+  border-radius:12px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.private{
+  border-color:var(--danger);
+  box-shadow:0 0 30px rgba(255,61,113,.12);
+}
+
+.private .status{
+  color:#ff6b92;
+}
+
+.chat{
+  height:480px;
+  display:flex;
+  flex-direction:column;
+  background:#080b12;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.messages{
+  flex:1;
+  overflow-y:auto;
+  padding:15px;
+}
+
+.msg{
+  max-width:85%;
+  padding:12px 14px;
+  margin-bottom:10px;
+  border-radius:14px;
+  line-height:1.45;
+  white-space:pre-wrap;
+}
+
+.msg.user{
+  margin-left:auto;
+  background:#123e39;
+}
+
+.msg.bot{
+  background:#171e2c;
+}
+
+.chat-input{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  border-top:1px solid var(--border);
+}
+
+.chat-input .input{
+  margin:0;
+}
+
+.game-board{
+  min-height:300px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+canvas{
+  max-width:100%;
+  background:#05070b;
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+
+.ttt{
+  display:grid;
+  grid-template-columns:repeat(3,80px);
+  gap:7px;
+}
+
+.ttt button{
+  width:80px;
+  height:80px;
+  border:1px solid var(--border);
+  background:#151d2b;
+  color:white;
+  border-radius:12px;
+  font-size:30px;
+}
+
+.memory{
+  display:grid;
+  grid-template-columns:repeat(4,65px);
+  gap:8px;
+}
+
+.memory button{
+  height:65px;
+  border:0;
+  border-radius:10px;
+  background:#1a2231;
+  color:transparent;
+  font-size:25px;
+}
+
+.memory button.open{
+  color:white;
+  background:#07544b;
+}
+
+.download-card{
+  border:1px solid rgba(0,255,208,.15);
+}
+
+.platforms{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.platform{
+  padding:14px;
+  border-radius:12px;
+  background:#080b12;
+  border:1px solid var(--border);
+  text-align:center;
+  cursor:pointer;
+}
+
+.platform:hover{
+  border-color:var(--accent);
+}
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.list-item{
+  padding:12px;
+  background:#080b12;
+  border-radius:11px;
+  margin-top:8px;
+  word-break:break-all;
+}
+
+footer{
+  text-align:center;
+  color:#64748b;
+  padding:30px 15px;
+  border-top:1px solid var(--border);
+  margin-top:25px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  padding:20px;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(480px,100%);
+  background:#101622;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+}
+
+@media(max-width:600px){
+  main{
+    padding:12px;
+  }
+
+  .hero{
+    padding:25px 5px;
+  }
+
+  .row{
+    flex-direction:column;
+  }
+
+  .ttt{
+    grid-template-columns:repeat(3,70px);
+  }
+
+  .ttt button{
+    width:70px;
+    height:70px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">MAFIYA <span>PREMIUM</span></div>
+
+  <div class="header-actions">
+    <button class="icon-btn" onclick="togglePrivate()">🕵️</button>
+    <button class="icon-btn" onclick="openSettings()">⚙️</button>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="active" onclick="showSection('home',this)">🏠 Home</button>
+  <button onclick="showSection('browser',this)">🌐 Browser</button>
+  <button onclick="showSection('ai',this)">🤖 AI</button>
+  <button onclick="showSection('games',this)">🎮 Games</button>
+  <button onclick="showSection('media',this)">📥 Downloader</button>
+  <button onclick="showSection('tools',this)">🛠️ Tools</button>
+  <button onclick="showSection('saved',this)">🔖 Saved</button>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="section active">
+
+  <div class="hero">
+    <h1>MAFIYA <span>SUPER APP</span></h1>
+    <p>
+      Browser, private mode, AI assistant, games, creator tools
+      and authorized media tools in one premium interface.
+    </p>
+  </div>
+
+  <div class="grid">
+
+    <div class="feature" onclick="showSection('browser')">
+      <div class="emoji">🌐</div>
+      <h3>Bing Browser</h3>
+      <p>Search the web with Bing.</p>
+    </div>
+
+    <div class="feature" onclick="showSection('ai')">
+      <div class="emoji">🤖</div>
+      <h3>AI Assistant</h3>
+      <p>Chat with the built-in assistant.</p>
+    </div>
+
+    <div class="feature" onclick="showSection('games')">
+      <div class="emoji">🎮</div>
+      <h3>Games Hub</h3>
+      <p>Play built-in JavaScript games.</p>
+    </div>
+
+    <div class="feature" onclick="showSection('media')">
+      <div class="emoji">📥</div>
+      <h3>Media Downloader</h3>
+      <p>Use direct/authorized media URLs.</p>
+    </div>
+
+    <div class="feature" onclick="showSection('tools')">
+      <div class="emoji">🛠️</div>
+      <h3>Creator Tools</h3>
+      <p>Useful tools for videos and posts.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- BROWSER -->
+<section id="browser" class="section">
+
+  <div class="card" id="browserCard">
+
+    <div class="title">🌐 Bing Browser</div>
+
+    <div class="desc">
+      Search Bing or enter a website URL. Pages are opened through
+      normal browser navigation because many websites block iframe embedding.
+    </div>
+
+    <div class="row">
+
+      <input
+        id="browserInput"
+        class="input"
+        placeholder="Search Bing or enter URL..."
+        onkeydown="if(event.key==='Enter')browse()">
+
+      <button class="btn" onclick="browse()">🔎 Search</button>
+
+    </div>
+
+    <div class="row">
+      <button class="btn secondary" onclick="browserBack()">↩️ Back</button>
+      <button class="btn secondary" onclick="browserForward()">↪️ Forward</button>
+      <button class="btn secondary" onclick="location.reload()">🔄 Reload</button>
+      <button class="btn secondary" onclick="addCurrentBookmark()">🔖 Bookmark</button>
+      <button class="btn secondary" onclick="togglePrivate()">🕵️ Private</button>
+    </div>
+
+    <div class="status" id="browserStatus">
+      Normal browsing mode.
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="title">Quick Search</div>
+
+    <div class="grid">
+      <button class="btn" onclick="quickSearch('technology news')">Technology</button>
+      <button class="btn" onclick="quickSearch('YouTube creator tips')">YouTube</button>
+      <button class="btn" onclick="quickSearch('latest news')">News</button>
+      <button class="btn" onclick="quickSearch('HTML JavaScript tutorial')">Coding</button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- AI -->
+<section id="ai" class="section">
+
+  <div class="card">
+
+    <div class="title">🤖 Mafiya AI</div>
+
+    <div class="desc">
+      Local assistant included in this single-file version.
+      For real general-purpose AI, connect a secure Cloudflare Worker/API.
+    </div>
+
+    <div class="chat">
+
+      <div class="messages" id="messages">
+        <div class="msg bot">
+          👋 Namaste bro! Main Mafiya AI hoon. Apna sawal bhejo.
+        </div>
+      </div>
+
+      <div class="chat-input">
+
+        <input
+          id="chatInput"
+          class="input"
+          placeholder="Ask anything..."
+          onkeydown="if(event.key==='Enter')sendChat()">
+
+        <button class="btn" onclick="sendChat()">Send</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAMES -->
+<section id="games" class="section">
+
+  <div class="card">
+
+    <div class="title">🎮 Games Hub</div>
+
+    <div class="desc">All games run directly in your browser.</div>
+
+    <div class="grid">
+
+      <div class="feature" onclick="startGame('snake')">
+        <div class="emoji">🐍</div>
+        <h3>Snake</h3>
+        <p>Classic snake game.</p>
+      </div>
+
+      <div class="feature" onclick="startGame('ttt')">
+        <div class="emoji">⭕</div>
+        <h3>Tic-Tac-Toe</h3>
+        <p>Play against computer.</p>
+      </div>
+
+      <div class="feature" onclick="startGame('memory')">
+        <div class="emoji">🧠</div>
+        <h3>Memory</h3>
+        <p>Match all pairs.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="title" id="gameTitle">Select a game</div>
+
+    <div class="game-board" id="gameArea">
+      <div style="color:var(--muted)">Game yahan load hoga.</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MEDIA -->
+<section id="media" class="section">
+
+  <div class="card download-card">
+
+    <div class="title">📥 Social / Media Downloader</div>
+
+    <div class="desc">
+      Apne ya officially downloadable content ke direct media URL ka
+      use karo. Platform security/restrictions ko bypass nahi kiya jata.
+    </div>
+
+    <div class="platforms">
+      <div class="platform" onclick="setPlatform('YouTube')">▶️ YouTube</div>
+      <div class="platform" onclick="setPlatform('Instagram')">📸 Instagram</div>
+      <div class="platform" onclick="setPlatform('Facebook')">📘 Facebook</div>
+      <div class="platform" onclick="setPlatform('TikTok')">🎵 TikTok</div>
+    </div>
+
+    <input
+      id="mediaUrl"
+      class="input"
+      placeholder="Paste permitted/direct media URL">
+
+    <button class="btn" onclick="prepareDownload()">
+      🔍 Check URL
+    </button>
+
+    <div id="downloadResult" class="status">
+      URL paste karke Check URL dabao.
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="title">📜 Download History</div>
+
+    <button class="btn danger" onclick="clearDownloads()">
+      Clear History
+    </button>
+
+    <div id="downloadHistory"></div>
+
+  </div>
+
+</section>
+
+
+<!-- TOOLS -->
+<section id="tools" class="section">
+
+  <div class="card">
+
+    <div class="title">🛠️ Creator Tools</div>
+
+    <div class="tool-grid">
+
+      <div class="feature">
+
+        <div class="emoji">🔢</div>
+        <h3>Character Counter</h3>
+
+        <textarea
+          id="counterText"
+          class="input"
+          rows="5"
+          placeholder="Text paste karo..."
+          oninput="countText()"></textarea>
+
+        <div id="counterResult" class="status">
+          0 characters
+        </div>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div class="emoji">📐</div>
+        <h3>Aspect Ratio</h3>
+
+        <input id="width" class="input" type="number" placeholder="Width">
+
+        <input id="height" class="input" type="number" placeholder="Height">
+
+        <button class="btn" onclick="calculateRatio()">Calculate</button>
+
+        <div id="ratioResult" class="status">
+          Example: 1080 × 1920 = 9:16
+        </div>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div class="emoji">💡</div>
+        <h3>Video Ideas</h3>
+
+        <button class="btn" onclick="generateIdea()">Generate</button>
+
+        <div id="ideaResult" class="status">
+          Idea yahan aayegi.
+        </div>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div class="emoji">#️⃣</div>
+        <h3>Hashtag Generator</h3>
+
+        <input
+          id="topic"
+          class="input"
+          placeholder="Topic">
+
+        <button class="btn" onclick="generateHashtags()">Generate</button>
+
+        <div id="hashResult" class="status"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SAVED -->
+<section id="saved" class="section">
+
+  <div class="card">
+
+    <div class="title">🔖 Bookmarks</div>
+
+    <button class="btn" onclick="addBookmark()">＋ Add Bookmark</button>
+
+    <div id="bookmarks"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="title">📜 Browser History</div>
+
+    <button class="btn danger" onclick="clearHistory()">
+      Clear History
+    </button>
+
+    <div id="history"></div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer>
+  Mafiya Premium Super App • Single HTML Edition
+</footer>
+
+
+<!-- SETTINGS -->
+<div class="modal" id="settingsModal">
+
+  <div class="modal-box">
+
+    <div class="title">⚙️ Settings</div>
+
+    <label style="color:var(--muted)">
+      Accent Color
+    </label>
+
+    <input
+      id="accentColor"
+      type="color"
+      value="#00ffd0"
+      style="width:100%;height:45px;margin-top:10px">
+
+    <br>
+
+    <button class="btn" onclick="saveSettings()">Save</button>
+    <button class="btn secondary" onclick="closeSettings()">Close</button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showSection(id,btn){
+
+  document.querySelectorAll('.section')
+    .forEach(s=>s.classList.remove('active'));
+
+  const target=document.getElementById(id);
+
+  if(target) target.classList.add('active');
+
+  document.querySelectorAll('.nav button')
+    .forEach(b=>b.classList.remove('active'));
+
+  if(btn) btn.classList.add('active');
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+/* =========================
+   BROWSER
+========================= */
+
+let privateMode=false;
+let browserHistory=[];
+let historyIndex=-1;
+
+function browse(){
+
+  const input=document.getElementById('browserInput');
+  const value=input.value.trim();
+
+  if(!value) return;
+
+  let url;
+
+  if(/^https?:\/\//i.test(value)){
+    url=value;
+  }
+  else if(value.includes('.') && !value.includes(' ')){
+    url='https://'+value;
+  }
+  else{
+    url='https://www.bing.com/search?q='+
+      encodeURIComponent(value);
+  }
+
+  window.open(url,'_blank','noopener');
+
+  browserHistory=
+    browserHistory.slice(0,historyIndex+1);
+
+  browserHistory.push(url);
+  historyIndex=browserHistory.length-1;
+
+  if(!privateMode){
+    saveHistory(url);
+  }
+}
+
+function quickSearch(q){
+
+  document.getElementById('browserInput').value=q;
+  browse();
+
+}
+
+function browserBack(){
+
+  if(historyIndex>0){
+
+    historyIndex--;
+
+    window.open(
+      browserHistory[historyIndex],
+      '_blank',
+      'noopener'
+    );
+
+  }
+
+}
+
+function browserForward(){
+
+  if(historyIndex<browserHistory.length-1){
+
+    historyIndex++;
+
+    window.open(
+      browserHistory[historyIndex],
+      '_blank',
+      'noopener'
+    );
+
+  }
+
+}
+
+function togglePrivate(){
+
+  privateMode=!privateMode;
+
+  const card=document.getElementById('browserCard');
+  const status=document.getElementById('browserStatus');
+
+  if(privateMode){
+
+    card.classList.add('private');
+
+    status.textContent=
+      '🕵️ Private mode ON — app local browsing history save nahi karega.';
+
+  }
+  else{
+
+    card.classList.remove('private');
+
+    status.textContent=
+      'Normal browsing mode.';
+
+  }
+
+}
+
+function addCurrentBookmark(){
+
+  const url=document.getElementById('browserInput').value.trim();
+
+  if(!url){
+    alert('Pehle URL/search enter karo.');
+    return;
+  }
+
+  addBookmarkValue(url);
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function saveHistory(url){
+
+  let data=
+    JSON.parse(
+      localStorage.getItem('mafiya_history') || '[]'
+    );
+
+  data.unshift({
+    url:url,
+    time:new Date().toLocaleString()
+  });
+
+  data=data.slice(0,50);
+
+  localStorage.setItem(
+    'mafiya_history',
+    JSON.stringify(data)
+  );
+
+  renderHistory();
+
+}
+
+function renderHistory(){
+
+  const box=document.getElementById('history');
+
+  const data=
+    JSON.parse(
+      localStorage.getItem('mafiya_history') || '[]'
+    );
+
+  if(!data.length){
+
+    box.innerHTML=
+      '<p style="color:var(--muted);margin-top:15px">No history.</p>';
+
+    return;
+  }
+
+  box.innerHTML=data.map(item=>`
+
+    <div class="list-item">
+
+      <div>${escapeHTML(item.url)}</div>
+
+      <div style="font-size:12px;color:var(--muted);margin-top:5px">
+        ${escapeHTML(item.time)}
+      </div>
+
+      <button
+        class="btn secondary"
+        onclick="openSafe('${escapeAttr(item.url)}')">
+        Open
+      </button>
+
+    </div>
+
+  `).join('');
+
+}
+
+function clearHistory(){
+
+  localStorage.removeItem('mafiya_history');
+  renderHistory();
+
+}
+
+
+/* =========================
+   BOOKMARKS
+========================= */
+
+function addBookmark(){
+
+  const url=prompt('URL enter karo:');
+
+  if(!url) return;
+
+  addBookmarkValue(url);
+
+}
+
+function addBookmarkValue(url){
+
+  let data=
+    JSON.parse(
+      localStorage.getItem('mafiya_bookmarks') || '[]'
+    );
+
+  if(!data.includes(url)){
+    data.unshift(url);
+  }
+
+  localStorage.setItem(
+    'mafiya_bookmarks',
+    JSON.stringify(data)
+  );
+
+  renderBookmarks();
+
+}
+
+function renderBookmarks(){
+
+  co
